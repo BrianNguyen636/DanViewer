@@ -1,5 +1,6 @@
-import {useState, React} from 'react';
-
+import {useState, React, useEffect} from 'react';
+import PostCard from './postCard';
+import './feed.css'
 
 const LOGIN = 'avianbot';
 const KEY = 'TekDM7Yef4WALQmM5sE28b4G'
@@ -7,8 +8,9 @@ const KEY = 'TekDM7Yef4WALQmM5sE28b4G'
 async function getResponse(params) {
     let page = 1;
     let url = 'https://danbooru.donmai.us/posts.json?'+
-    'page=' + page 
+    'page=' + page +'&limit=12'
     +'&login='+LOGIN+'&api_key='+KEY;
+    
     let response = await fetch(url,
         {method:"GET", mode:"cors"}
     )
@@ -21,22 +23,24 @@ export default function Feed() {
     const [status, setStatus] = useState('');
     const [loading, setLoading] = useState(true);
 
-    getResponse().then(
-        (response) => {
-            setLoading(false);
-            setResponse(response);
-        }
-    )
+    useEffect(()=> {
+        getResponse().then(
+            (response) => {
+                setLoading(false);
+                setResponse(response);
+            }
+        )
+    },[]);
 
     return (
-        <div>
-            Posts: {response.length}
+        <div id='feed'>
+            {/* Posts: {response.length} */}
             {!loading && 
-                <div>
+                <div id='list'>
                     {response.map((post) => {
                         return(
-                            <div>
-                                {post.id}
+                            <div key = 'id'>
+                                <PostCard {...post}/>
                             </div>
                         )
                     })}
