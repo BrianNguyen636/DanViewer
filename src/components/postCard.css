@@ -1,5 +1,5 @@
 #card{
-    padding: 20px;
     text-align: center;
-    background-color: rgb(226, 226, 226);
+    height: fit-content;
+    width: auto;
 }

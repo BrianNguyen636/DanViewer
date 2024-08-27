@@ -1,9 +1,13 @@
-
+#feed{
+    display: flex;
+    flex-direction: column;
+}
 #list{
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto ;
     margin-left: 20px;
     margin-right: 20px;
-    justify-content: left;
-    grid-gap:100px
+    /* justify-content: center; */
+    grid-gap: 60px;
+    margin-bottom: 40px;
 }

@@ -1,7 +1,11 @@
 .App{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   background-color: darkslategrey;
   color:white;
   padding: 20px;
+  margin: 0;
 }
 
 

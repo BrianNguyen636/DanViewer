@@ -3,9 +3,11 @@ import './postCard.css'
 
 export default function PostCard(post) {
     return (
-        <div class = "card" id ='card'>
-            {post.id}
-            <img src={post.preview_file_url}></img>
+        <div className = "card border-primary mb-3" id ='card'>
+            <div className='card-body'>
+                <img src={post.preview_file_url} alt=''></img>
+            </div>
+            <div className='card-footer'>{post.tag_string_artist}</div>
         </div>
     );
 }
