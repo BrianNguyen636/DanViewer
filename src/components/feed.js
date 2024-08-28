@@ -29,11 +29,19 @@ function postFeed(data){
     )
 }
 
+function openModal() {
+    console.log("Open Modal");
+    // if (modalOpen) {
+    //     setModalOpen(false);
+    // } else setModalOpen(true);
+}
+
 export default function Feed() {
 
     const [response, setResponse] = useState({});
-    const [status, setStatus] = useState('');
+    const [modalOpen, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [postData, setPostData] = useState({});
 
     useEffect(()=> {
         getResponse().then(
