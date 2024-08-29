@@ -8,6 +8,33 @@
   margin: 0;
 }
 
+#feed{
+  display: flex;
+  flex-direction: column;
+}
+#list{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, min(200px));
+  margin-left: 20px;
+  margin-right: 20px;
+  grid-gap: 60px;
+  height: max-content;
+  margin-bottom: 40px;
+  padding: 10px;
+}
+
+#card{
+  text-align: center;
+  height: fit-content;
+  width: auto;
+  opacity: 80%
+}
+#card:hover{
+  opacity: 100%;
+  cursor: pointer;
+}
+
+
 
 
 /* .App {
