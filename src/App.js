@@ -44,15 +44,15 @@ function App() {
     )
   }
 
-  const clicked = () => {
-    console.log("Clicked");
-    openModal();
-  }
+  // const clicked = () => {
+  //   console.log("Clicked");
+  //   openModal();
+  // }
 
   const PostCard = (post)=> {
     return (
         <div>
-            <div className = "card border-primary mb-3" id ='card' onClick={clicked} >
+            <div className = "card border-primary mb-3" id ='card' onClick={()=>{openModal(post)}} >
                 <div className='card-body'>
                     <img src={post.preview_file_url} alt=''></img>
                 </div>
@@ -64,10 +64,12 @@ function App() {
   }
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [openedPost, setOpenedPost] = useState('');
 
-  const openModal = () => {
+  function openModal(post) {
     if (!modalOpen) {
       setModalOpen(true);
+      setOpenedPost(post);
     } 
   }
 
@@ -85,7 +87,7 @@ function App() {
       <div id='feed'>
             {!loading && postFeed(response)}
       </div>
-      {modalOpen && <Modal></Modal>}
+      {modalOpen && <Modal {...openedPost}></Modal>}
       <NavBar></NavBar>
     </div>
   );

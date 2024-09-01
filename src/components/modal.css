@@ -9,5 +9,16 @@
     color: white;
     z-index: 2;
 
+    flex-direction: column;
+    display: flex;
+    align-items: center;
     padding: 40px;
+}
+
+#modalImg{
+    width: auto;
+    height: 100%;
+}
+#viewButton{
+    margin: 10px;
 }
