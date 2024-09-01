@@ -1,5 +1,13 @@
 #modal{
-    position: absolute;
-    width: 1000px;
-    top: 100px;
+    position: fixed;
+    width: 80%;
+    height:800px;
+    top: 70px;
+    left:10%;
+    overflow-y: scroll;
+    background-color: #3a3a3a;
+    color: white;
+    z-index: 2;
+
+    padding: 40px;
 }

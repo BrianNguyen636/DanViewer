@@ -11,7 +11,7 @@ const KEY = 'TekDM7Yef4WALQmM5sE28b4G'
 async function getResponse() {
     let page = 1;
     let url = 'https://danbooru.donmai.us/posts.json?'+
-    'page=' + page +'&limit=12'
+    'page=' + page +'&limit=12&tags=rating:G'
     +'&login='+LOGIN+'&api_key='+KEY;
     
     let response = await fetch(url,
@@ -66,13 +66,18 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
-    if (modalOpen) {
-      setModalOpen(false);
-    } else setModalOpen(true);
+    if (!modalOpen) {
+      setModalOpen(true);
+    } 
   }
 
   return (
     <div className="App">
+      {modalOpen && 
+        <div id='modalBackdrop' onClick={
+          ()=>{if (modalOpen) setModalOpen(false)}
+        }></div>}
+    
       <h1>DanViewer</h1>
       <hr></hr>
       <SearchBar></SearchBar>
