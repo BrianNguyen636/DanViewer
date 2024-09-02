@@ -22,3 +22,8 @@
 #viewButton{
     margin: 10px;
 }
+#tags{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
