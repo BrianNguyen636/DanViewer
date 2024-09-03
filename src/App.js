@@ -45,11 +45,6 @@ function App() {
     )
   }
 
-  // const clicked = () => {
-  //   console.log("Clicked");
-  //   openModal();
-  // }
-
   const PostCard = (post)=> {
     return (
           <div className = "card border-primary mb-3" id ='card' onClick={()=>{openModal(post)}} >
@@ -90,6 +85,7 @@ function App() {
         setLoading(false);
         if (response.length > 0) {
           setResponse(response);
+          setPage(1);
         } else {
           alert("No results found!")
         }
