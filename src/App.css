@@ -27,7 +27,7 @@
 
 #card{
   text-align: center;
-  height: fit-content;
+  height: auto;
   width: fit-content;
   opacity: 80%
 }
@@ -46,7 +46,16 @@
   height: 100%;
   opacity: 50%;
 }
+#searchbar{
+  display: flex;
+  align-items: center;
 
+  .form-text{
+    height: 30px;
+    width: 300px;
+    margin-right: 10px;
+  }
+}
 
 /* .App {
   text-align: center;

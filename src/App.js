@@ -1,6 +1,6 @@
 import './App.css';
 import './bootstrap.min.css'
-import SearchBar from './components/searchbar';
+// import SearchBar from './components/searchbar';
 import {react, useState, useEffect} from 'react'
 import NavBar from './components/navbar';
 import Modal from './components/modal';
@@ -8,10 +8,9 @@ import Modal from './components/modal';
 const LOGIN = 'avianbot';
 const KEY = 'TekDM7Yef4WALQmM5sE28b4G'
 
-async function getResponse() {
-    let page = 1;
+async function getResponse(tagstring, page) {
     let url = 'https://danbooru.donmai.us/posts.json?'+
-    'page=' + page +'&limit=12&tags=rating:G'
+    'page=' + page +'&limit=12&tags=' + tagstring
     +'&login='+LOGIN+'&api_key='+KEY;
     
     let response = await fetch(url,
@@ -23,9 +22,11 @@ async function getResponse() {
 function App() {
   const [response, setResponse] = useState({});
   const [loading, setLoading] = useState(true);
+  const [rating, setRating] = useState('G,');
+  const [page, setPage] = useState(1);
 
   useEffect(()=> {
-      getResponse().then(
+      getResponse('rating:' + rating, 1).then(
           (response) => {
               setLoading(false);
               setResponse(response);
@@ -51,14 +52,12 @@ function App() {
 
   const PostCard = (post)=> {
     return (
-        <div>
-            <div className = "card border-primary mb-3" id ='card' onClick={()=>{openModal(post)}} >
-                <div className='card-body'>
-                    <img src={post.preview_file_url} alt=''></img>
-                </div>
-                <div className='card-footer'>{post.tag_string_artist}</div>
-            </div>
-        </div>
+          <div className = "card border-primary mb-3" id ='card' onClick={()=>{openModal(post)}} >
+              <div className='card-body'>
+                  <img src={post.preview_file_url} alt=''></img>
+              </div>
+              <div className='card-footer'>{post.tag_string_artist}</div>
+          </div>
 
     );
   }
@@ -73,6 +72,15 @@ function App() {
     } 
   }
 
+  const searchbar = () => {
+    return (
+      <div id='searchbar'>
+        <input type='text' className='form-text' placeholder='Enter up to two tags, space separated'></input>
+        <button className='btn btn-primary'>Search</button>
+      </div>
+    )
+  }
+
   return (
     <div className="App">
       {modalOpen && 
@@ -82,7 +90,7 @@ function App() {
     
       <h1>DanViewer</h1>
       <hr></hr>
-      <SearchBar></SearchBar>
+      {searchbar()}
       <hr></hr>
       <div id='feed'>
             {!loading && postFeed(response)}
