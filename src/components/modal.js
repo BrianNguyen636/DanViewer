@@ -16,12 +16,12 @@ export default function Modal(post) {
                 <h5>Artist</h5>
                 {/* <p>{post.tag_string_artist}</p> */}
                 {artists.map((e)=>{
-                    return(<p>{e}</p>)
+                    return(<p key={e}>{e}</p>)
                 })}
                 <h5>Series</h5>
                 {/* <p>{post.tag_string_copyright}</p> */}
                 {series.map((e)=>{
-                    return(<p>{e}</p>)
+                    return(<p key={e}>{e}</p>)
                 })}
             </div>
         </div>

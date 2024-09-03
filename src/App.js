@@ -72,13 +72,28 @@ function App() {
     } 
   }
 
+  const [tagString, setTagString] = useState("");
+
   const searchbar = () => {
     return (
       <div id='searchbar'>
-        <input type='text' className='form-text' placeholder='Enter up to two tags, space separated'></input>
-        <button className='btn btn-primary'>Search</button>
+        <input type='text' className='form-text' onChange={(e)=>{setTagString(e.target.value)}} placeholder='Enter up to two tags, space separated'></input>
+        <button className='btn btn-primary' 
+          onClick={()=>submitSearch()}>Search</button>
       </div>
     )
+  }
+  function submitSearch(){
+    setLoading(true);
+    getResponse('rating:' + rating + " " + tagString, 1)
+      .then((response) => {
+        setLoading(false);
+        if (response.length > 0) {
+          setResponse(response);
+        } else {
+          alert("No results found!")
+        }
+      })
   }
 
   return (
