@@ -22,11 +22,11 @@ async function getResponse(tagstring, page) {
 function App() {
   const [response, setResponse] = useState({});
   const [loading, setLoading] = useState(true);
-  const [rating, setRating] = useState('G,');
+  // const [ratingString, setRatingString] = useState('G,');
   const [page, setPage] = useState(1);
 
   useEffect(()=> {
-      getResponse('rating:' + rating, 1).then(
+      getResponse('rating:' + 'g,', 1).then(
           (response) => {
               setLoading(false);
               setResponse(response);
@@ -73,32 +73,43 @@ function App() {
     return (
       <div id='searchbar'>
         <input type='text' className='form-text' onChange={(e)=>{setTagString(e.target.value)}} placeholder='Enter up to two tags, space separated'></input>
-        <button className='btn btn-primary' 
+        <button className='btn btn-secondary' 
           onClick={()=>submitSearch()}>Search</button>
           <div id='checkboxes'>
-            <div><input type='checkbox' defaultChecked="true"></input> General</div>
-            <div><input type='checkbox'></input> Sensitive</div>
+            <div><input type='checkbox' defaultChecked="true" onChange={(e)=>setG(e.target.checked)}></input> General</div>
+            <div><input type='checkbox' onChange={(e)=>setS(e.target.checked)}></input> Sensitive</div>
           </div>
           <div id='checkboxes'>
-            <div><input type='checkbox'></input> Questionable </div>
-            <div><input type='checkbox'></input> Explicit </div>
+            <div><input type='checkbox' onChange={(e)=>setQ(e.target.checked)}></input> Questionable </div>
+            <div><input type='checkbox' onChange={(e)=>setE(e.target.checked)}></input> Explicit </div>
           </div>
       </div>
     )
   }
+  const [g, setG] = useState(true);
+  const [s, setS] = useState(false);
+  const [q, setQ] = useState(false);
+  const [e, setE] = useState(false);
+
   function submitSearch(){
     setLoading(true);
-    getResponse('rating:' + rating + " " + tagString, 1)
+    let str = '';
+    if (g) str+= 'g,';
+    if (s) str+= 's,';
+    if (q) str+= 'q,';
+    if (e) str+= 'e';
+    console.log(str);
+    getResponse('rating:' + str + " " + tagString, 1)
       .then((response) => {
-        setLoading(false);
-        console.log(response);
-        
         if (response.length > 0) {
           setResponse(response);
           setPage(1);
         } else {
           alert("No results found!")
         }
+
+        setLoading(false);
+        console.log(response);
       })
   }
 
