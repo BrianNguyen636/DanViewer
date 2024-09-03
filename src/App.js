@@ -75,6 +75,14 @@ function App() {
         <input type='text' className='form-text' onChange={(e)=>{setTagString(e.target.value)}} placeholder='Enter up to two tags, space separated'></input>
         <button className='btn btn-primary' 
           onClick={()=>submitSearch()}>Search</button>
+          <div id='checkboxes'>
+            <div><input type='checkbox' defaultChecked="true"></input> General</div>
+            <div><input type='checkbox'></input> Sensitive</div>
+          </div>
+          <div id='checkboxes'>
+            <div><input type='checkbox'></input> Questionable </div>
+            <div><input type='checkbox'></input> Explicit </div>
+          </div>
       </div>
     )
   }
@@ -83,6 +91,8 @@ function App() {
     getResponse('rating:' + rating + " " + tagString, 1)
       .then((response) => {
         setLoading(false);
+        console.log(response);
+        
         if (response.length > 0) {
           setResponse(response);
           setPage(1);

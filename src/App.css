@@ -56,6 +56,11 @@
     margin-right: 10px;
   }
 }
+#checkboxes{
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
 
 /* .App {
   text-align: center;
