@@ -74,7 +74,7 @@ function App() {
       <div id='searchbar'>
         <input type='text' className='form-text' onChange={(e)=>{setTagString(e.target.value)}} placeholder='Enter up to two tags, space separated'></input>
         <button className='btn btn-secondary' 
-          onClick={()=>submitSearch()}>Search</button>
+          onClick={()=>submitSearch(tagString)}>Search</button>
           <div id='checkboxes'>
             <div><input type='checkbox' defaultChecked="true" onChange={(e)=>setG(e.target.checked)}></input> General</div>
             <div><input type='checkbox' onChange={(e)=>setS(e.target.checked)}></input> Sensitive</div>
@@ -91,7 +91,7 @@ function App() {
   const [q, setQ] = useState(false);
   const [e, setE] = useState(false);
 
-  function submitSearch(){
+  function submitSearch(tags){
     setLoading(true);
     let str = '';
     if (g) str+= 'g,';
@@ -99,7 +99,7 @@ function App() {
     if (q) str+= 'q,';
     if (e) str+= 'e';
     console.log(str);
-    getResponse('rating:' + str + " " + tagString, 1)
+    getResponse('rating:' + str + " " + tags, 1)
       .then((response) => {
         if (response.length > 0) {
           setResponse(response);
@@ -111,6 +111,45 @@ function App() {
         setLoading(false);
         console.log(response);
       })
+  }
+
+
+  function Modal(post) {
+    let artists = post.tag_string_artist.split(" ");
+    let series = post.tag_string_copyright.split(" ");
+    let chars = post.tag_string_character.split(" ");
+    // console.log(series);
+    if (post.file_ext == 'mp4') {
+
+    } 
+    return (
+        <div className='card' id='modal'>
+            <div className='card' id='imageCard'>
+                <img id="modalImg" alt ='' src={post.large_file_url}></img>
+            </div>
+            <a className='btn btn-secondary'href={post.file_url} target="_blank" id='viewButton'>View Original</a>
+            <hr></hr>
+            <div id='tags'>
+              {tagList('Artist', artists)}
+              {tagList('Series', series)}
+              {tagList('Character', chars)}
+            </div>
+        </div>
+    );
+  }
+  function tagList(label, tags) {
+    return (
+      <div className='tagList'>
+        <h5>{label}</h5>
+        {tags.map((e)=>{
+            return(<button className='btn btn-primary' key={e} 
+              onClick={()=>{
+                setModalOpen(false);
+                submitSearch(e);
+              }}>{e}</button>)
+        })}
+      </div>
+    );
   }
 
   return (
@@ -127,7 +166,7 @@ function App() {
       <div id='feed'>
             {!loading && postFeed(response)}
       </div>
-      {modalOpen && <Modal {...openedPost}></Modal>}
+      {modalOpen && Modal(openedPost)}
       <NavBar></NavBar>
     </div>
   );
