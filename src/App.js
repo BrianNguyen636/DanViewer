@@ -72,7 +72,7 @@ function App() {
   const searchbar = () => {
     return (
       <div id='searchbar'>
-        <input type='text' className='form-text' onChange={(e)=>{setTagString(e.target.value)}} placeholder='Enter up to two tags, space separated'></input>
+        <input type='text' id='searchBarText' className='form-text' onChange={(e)=>{setTagString(e.target.value)}} placeholder='Enter up to two tags, space separated'></input>
         <button className='btn btn-secondary' 
           onClick={()=>submitSearch(tagString)}>Search</button>
           <div id='checkboxes'>
@@ -118,6 +118,7 @@ function App() {
     let artists = post.tag_string_artist.split(" ");
     let series = post.tag_string_copyright.split(" ");
     let chars = post.tag_string_character.split(" ");
+    let tagstring = post.tag_string_general.split(" ");
     // console.log(series);
     if (post.file_ext == 'mp4') {
 
@@ -133,6 +134,8 @@ function App() {
               {tagList('Artist', artists)}
               {tagList('Series', series)}
               {tagList('Character', chars)}
+              <hr></hr>
+              {tagList('Tags', tagstring)}
             </div>
         </div>
     );
@@ -145,6 +148,7 @@ function App() {
             return(<button className='btn btn-primary' key={e} 
               onClick={()=>{
                 setModalOpen(false);
+                document.getElementById("searchBarText").value = e;
                 submitSearch(e);
               }}>{e}</button>)
         })}
