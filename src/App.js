@@ -1,9 +1,6 @@
 import './App.css';
 import './bootstrap.min.css'
-// import SearchBar from './components/searchbar';
 import {react, useState, useEffect} from 'react'
-import NavBar from './components/navbar';
-import Modal from './components/modal';
 
 const LOGIN = 'avianbot';
 const KEY = 'TekDM7Yef4WALQmM5sE28b4G'
@@ -89,25 +86,24 @@ function App() {
   const [q, setQ] = useState(false);
   const [e, setE] = useState(false);
 
-  function submitSearch(tags){
+  function submitSearch(tags, page = 1){
     setLoading(true);
     let str = '';
     if (g) str+= 'g,';
     if (s) str+= 's,';
     if (q) str+= 'q,';
     if (e) str+= 'e';
-    console.log(str);
-    getResponse('rating:' + str + " " + tags, 1)
+    // console.log(str);
+    getResponse('rating:' + str + " " + tags, page)
       .then((response) => {
         if (response.length > 0) {
           setResponse(response);
-          setPage(1);
+          setPage(page);
         } else {
           alert("No results found!")
         }
-
         setLoading(false);
-        console.log(response);
+        // console.log(response);
       })
   }
 
@@ -153,6 +149,32 @@ function App() {
       </div>
     );
   }
+  
+  function getPage(page) {
+    submitSearch(document.getElementById("searchBarText").value, page);
+    setPage(page);
+  }
+
+  function NavBar() {
+    return (
+        <div id='navbar'>
+            <ul className="pagination" id='navButtons'>
+                <li className="page-item">
+                    <button className="page-link" disabled={page <= 1} onClick={()=>getPage(page-1)}>&laquo;</button>
+                </li>
+                <li className="page-item" onClick={()=>{}}>
+                    <button className="page-link">{page}</button>
+                </li>
+                {/* <li className="page-item">
+                    <a className="page-link" href="/">2</a>
+                </li> */}
+                <li className="page-item">
+                    <button className="page-link" onClick={()=>getPage(page+1)}>&raquo;</button>
+                </li>
+            </ul>
+        </div>
+    );
+  }
 
   return (
     <div className="App">
@@ -167,9 +189,10 @@ function App() {
       <hr></hr>
       <div id='feed'>
             {!loading && postFeed(response)}
+            {loading && <h1 id='loadingText'>LOADING...</h1>}
       </div>
       {modalOpen && Modal(openedPost)}
-      <NavBar></NavBar>
+      {!loading && NavBar()}
     </div>
   );
 }
