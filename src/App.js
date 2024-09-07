@@ -67,14 +67,12 @@ function App() {
     } 
   }
 
-  const [tagString, setTagString] = useState("");
-
   const searchbar = () => {
     return (
       <div id='searchbar'>
-        <input type='text' id='searchBarText' className='form-text' onChange={(e)=>{setTagString(e.target.value)}} placeholder='Enter up to two tags, space separated'></input>
+        <input type='text' id='searchBarText' className='form-text' placeholder='Enter up to two tags, space separated'></input>
         <button className='btn btn-secondary' 
-          onClick={()=>submitSearch(tagString)}>Search</button>
+          onClick={()=>submitSearch(document.getElementById("searchBarText").value)}>Search</button>
           <div id='checkboxes'>
             <div><input type='checkbox' defaultChecked="true" onChange={(e)=>setG(e.target.checked)}></input> General</div>
             <div><input type='checkbox' onChange={(e)=>setS(e.target.checked)}></input> Sensitive</div>
