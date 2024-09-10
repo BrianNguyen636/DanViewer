@@ -18,6 +18,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}/>
+          <Route path="/posts" element={<Home />}/>
         </Routes>
       </BrowserRouter>
     </div>

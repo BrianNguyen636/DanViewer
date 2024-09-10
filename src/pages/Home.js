@@ -20,6 +20,9 @@ export default function Home() {
   // const [ratingString, setRatingString] = useState('G,');
   const [page, setPage] = useState(1);
 
+  const queryParams = new URLSearchParams(window.location.search);
+  const pageNum = queryParams.get("page");
+
   useEffect(()=> {
       getResponse('rating:' + 'g,', 1).then(
           (response) => {
