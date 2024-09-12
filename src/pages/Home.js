@@ -21,10 +21,10 @@ export default function Home() {
   const [page, setPage] = useState(1);
 
   const queryParams = new URLSearchParams(window.location.search);
-  const pageNum = queryParams.get("page");
+  const pageNum = 1 || queryParams.get("page");
 
   useEffect(()=> {
-      getResponse('rating:' + 'g,', 1).then(
+      getResponse('rating:' + 'g,', page).then(
           (response) => {
               setLoading(false);
               setResponse(response);
@@ -157,6 +157,27 @@ export default function Home() {
     submitSearch(document.getElementById("searchBarText").value, page);
     setPage(page);
   }
+
+  // function NavBar() {
+  //   return (
+  //       <div id='navbar'>
+  //           <ul className="pagination" id='navButtons'>
+  //               <li className="page-item">
+  //                   <a className="page-link" disabled={pageNum <= 1} href={"?page=" + parseInt(pageNum+1)}>&laquo;</a>
+  //               </li>
+  //               <li className="page-item" onClick={()=>{}}>
+  //                   <button className="page-link">{page}</button>
+  //               </li>
+  //               {/* <li className="page-item">
+  //                   <a className="page-link" href="/">2</a>
+  //               </li> */}
+  //               <li className="page-item">
+  //                   <a className="page-link" href={"?page=" + parseInt(pageNum+1)}>&raquo;</a>
+  //               </li>
+  //           </ul>
+  //       </div>
+  //   );
+  // }
 
   function NavBar() {
     return (
